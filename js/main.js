@@ -6,6 +6,14 @@ canvas.width = 640;
 canvas.height =480;
 document.body.appendChild(canvas);
 
+//function that will resize the game dynamically when window size is manipulated
+function resize(){
+    var height = window.innerHeight;
+    var width = window.innerWidth;
+    var ratio = canvas.width/canvas.height;
+    canvas.style.width = width+'px';
+    canvas.style.height = height+'px';
+}
 //graphics load. the function is necessary so that all graphics load before start
 var bgReady = false;
 var bgImage = new Image();
@@ -31,7 +39,7 @@ enemyImage.src = "img/temp/ENEMY.png";
 var score = 0;
 
 
-//gameloop
+//gameloop. each function that draws or manipulates the game is called here. it is updated as often as possible.
 
 var main = function(){
     var now = Date.now();
@@ -43,6 +51,8 @@ var main = function(){
     then = now;
 
     requestAnimationFrame(main);
+
+    resize();
 };
 
 //here the game starts
