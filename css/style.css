@@ -3,6 +3,10 @@ body{
     margin:0 auto;
 }
 
+html, body {
+    overflow: hidden;
+}
+
 
 
 

@@ -81,14 +81,15 @@ var update = function (modifier) {
 //drawing the game
 var render = function(){
     if (bgReady){
-        canvasContext.drawImage(bgImage,0 ,0);
+        canvasContext.drawImage(bgImage,0 ,0, canvas.width, canvas.height);
     }
     if (heroReady){
-        canvasContext.drawImage(heroImage,player.x,player.y);
+        canvasContext.drawImage(heroImage,player.x,player.y, 100, 80);
     }
     if (enemyReady){
-        canvasContext.drawImage(enemyImage,enemy.x, enemy.y);
+        canvasContext.drawImage(enemyImage,enemy.x, enemy.y, 72 , 40);
     }
+
     //score display
     canvasContext.fillStyle = "rgb(250,250,250)";
     canvasContext.font = "24px Helvetica";
