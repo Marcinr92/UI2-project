@@ -17,7 +17,6 @@ addEventListener("keyup", function(e){
 
 //randomises position of new enemy when previous is caught
 var reset = function(){
-
     enemy.x = 32 + (Math.random() * (canvas.width - 64));
     enemy.y = 32 + (Math.random() * (canvas.height - 64));
 }
@@ -44,18 +43,22 @@ var update = function (modifier) {
     if(leftCollision && topCollision){
         enemy.x += enemy.speed * modifier;
         enemy.y -= enemy.speed * modifier;
+        enemyImage.src = "img/fish3right.png";
     }
     else if(leftCollision && !topCollision){
         enemy.x += enemy.speed * modifier;
         enemy.y += enemy.speed * modifier;
+        enemyImage.src = "img/fish3right.png";
     }
     else if(!leftCollision && topCollision){
         enemy.x -= enemy.speed * modifier;
         enemy.y -= enemy.speed * modifier;
+        enemyImage.src = "img/fish3.png";
     }
     else if (!leftCollision && !topCollision){
         enemy.x -= enemy.speed * modifier;
         enemy.y += enemy.speed * modifier;
+        enemyImage.src = "img/fish3.png";
     }
     //following if statements moves the player according to keypresses
     if (38 in keysDown){
@@ -66,9 +69,11 @@ var update = function (modifier) {
     }
     if (37 in keysDown){
         player.x -= player.speed * modifier;
+        heroImage.src = "img/GreenfishLeft.png";
     }
     if (39 in keysDown){
         player.x += player.speed * modifier;
+        heroImage.src = "img/GreenFish.png";
     }
 
     //detects if the player and the enemy have collided
@@ -76,7 +81,7 @@ var update = function (modifier) {
         ++score;
         reset();
     }
-}
+};
 
 //drawing the game
 var render = function(){
