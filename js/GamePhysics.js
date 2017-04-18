@@ -96,9 +96,9 @@ var render = function(){
     }
 
     //score display
-    canvasContext.fillStyle = "rgb(250,250,250)";
-    canvasContext.font = "24px Helvetica";
+    canvasContext.fillStyle = "rgb(0,0,0)";
+    canvasContext.font = "36px Hobo";
     canvasContext.textAlign = "center";
     canvasContext.textBaseline = "top";
-    canvasContext.fillText("Score: "+score, canvas.width/2 ,canvas.height/2);
+    canvasContext.fillText("Score: "+score, canvas.width/2 ,60);
 }

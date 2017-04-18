@@ -7,6 +7,10 @@ html, body {
     overflow: hidden;
 }
 
+@font-face {
+    font-family: 'Hobo';
+    src: url('../fonts/HoboStd.otf');
+}
 
 
 

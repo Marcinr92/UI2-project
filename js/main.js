@@ -21,7 +21,7 @@ var bgImage = new Image();
 bgImage.onload= function() {
     bgReady = true;
 };
-bgImage.src = "img/background.png";
+bgImage.src = "img/backgroundScore.png";
 
 var heroReady = false;
 var heroImage = new Image();
