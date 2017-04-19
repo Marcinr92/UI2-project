@@ -23,19 +23,9 @@ bgImage.onload= function() {
 };
 bgImage.src = "img/backgroundScore.png";
 
-var heroReady = false;
-var heroImage = new Image();
-heroImage.onload = function(){
-    heroReady = true;
-};
-heroImage.src = "img/GreenFish.png";
+var player = new Player(250,0,0, "img/GreenFish.png", "img/GreenfishLeft.png");
+var fish1 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png");
 
-var enemyReady = false;
-var enemyImage = new Image();
-enemyImage.onload = function(){
-    enemyReady = true;
-};
-enemyImage.src = "img/fish3.png";
 
 var score = 0;
 

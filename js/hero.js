@@ -2,8 +2,56 @@
  * Created by Laptopski on 2017-04-17.
  */
 // the players coordinates and speed in pixels.
+/*
 var player = {
     speed: 256,
     x:0,
     y:0
-};
+};*/
+
+function Player(speed, x, y, img, imgRight) {
+    this.speed = speed;
+    this.x = x;
+    this.y = y;
+    this.xDir = 1;
+
+    this.heroReady = false;
+    this.heroImage = new Image();
+    this.heroImageRight = new Image();
+    var _this = this;
+    this.heroImage.onload = function(){
+        console.log("inne");
+        _this.heroReady = true;
+    };
+
+    this.heroImage.src = img;
+    this.heroImageRight.src = imgRight;
+
+    this.draw = function() {
+        console.log("fisk");
+        if (this.xDir == -1){
+            canvasContext.drawImage(this.heroImage, this.x, this.y, 100, 80);
+        } else {
+            canvasContext.drawImage(this.heroImageRight, this.x, this.y, 100, 80);
+        }
+    };
+
+    this.movePlayer = function(modifier){
+        //following if statements moves the player according to keypresses
+        if (38 in keysDown){
+            this.y -= this.speed * modifier;
+        }
+        if (40 in keysDown){
+            this.y += this.speed * modifier;
+        }
+        if (37 in keysDown){
+            this.x -= this.speed * modifier;
+            this.xDir = 1;
+        }
+        if (39 in keysDown){
+            this.x += this.speed * modifier;
+            this.xDir = -1;
+
+        }
+    }
+}

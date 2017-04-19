@@ -1,8 +1,7 @@
 /**
  * Created by Laptopski on 2017-04-17.
  */
-var leftCollision = null;
-var topCollision = null;
+
 var keysDown = {};
 
 // eventisteners that are triggered as soon as any directional key is pressed
@@ -17,67 +16,18 @@ addEventListener("keyup", function(e){
 
 //randomises position of new enemy when previous is caught
 var reset = function(){
-    enemy.x = 32 + (Math.random() * (canvas.width - 64));
-    enemy.y = 32 + (Math.random() * (canvas.height - 64));
-}
+    fish1.x = 32 + (Math.random() * (canvas.width - 64));
+    fish1.y = 32 + (Math.random() * (canvas.height - 64));
+};
 
 //game physics and collision detection
 var update = function (modifier) {
 
-    // These look at each frame to see if the enemy has reached any of the sides of the canvas. and if they did
-    // a boolean is changed.
-    if (enemy.x >= canvas.width){
-        leftCollision = false;
-    }
-    if (enemy.x <= 0){
-        leftCollision = true;
-    }
-    if (enemy.y >= canvas.height){
-        topCollision = true;
-    }
-    if (enemy.y <= 0){
-        topCollision = false;
-    }
-    //following code controls the enemy movement on the screen and colliding with walls with the help of two booleans
-
-    if(leftCollision && topCollision){
-        enemy.x += enemy.speed * modifier;
-        enemy.y -= enemy.speed * modifier;
-        enemyImage.src = "img/fish3right.png";
-    }
-    else if(leftCollision && !topCollision){
-        enemy.x += enemy.speed * modifier;
-        enemy.y += enemy.speed * modifier;
-        enemyImage.src = "img/fish3right.png";
-    }
-    else if(!leftCollision && topCollision){
-        enemy.x -= enemy.speed * modifier;
-        enemy.y -= enemy.speed * modifier;
-        enemyImage.src = "img/fish3.png";
-    }
-    else if (!leftCollision && !topCollision){
-        enemy.x -= enemy.speed * modifier;
-        enemy.y += enemy.speed * modifier;
-        enemyImage.src = "img/fish3.png";
-    }
-    //following if statements moves the player according to keypresses
-    if (38 in keysDown){
-        player.y -= player.speed * modifier;
-    }
-    if (40 in keysDown){
-        player.y += player.speed * modifier;
-    }
-    if (37 in keysDown){
-        player.x -= player.speed * modifier;
-        heroImage.src = "img/GreenfishLeft.png";
-    }
-    if (39 in keysDown){
-        player.x += player.speed * modifier;
-        heroImage.src = "img/GreenFish.png";
-    }
+    fish1.updateEnemy(modifier);
+    player.movePlayer(modifier);
 
     //detects if the player and the enemy have collided
-    if (player.x <= (enemy.x + 32) && enemy.x <= (player.x + 32) && player.y <= (enemy.y + 32) && enemy.y <= (player.y + 32)){
+    if (player.x <= (fish1.x + 32) && fish1.x <= (player.x + 32) && player.y <= (fish1.y + 32) && fish1.y <= (player.y + 32)){
         ++score;
         reset();
     }
@@ -88,11 +38,14 @@ var render = function(){
     if (bgReady){
         canvasContext.drawImage(bgImage,0 ,0, canvas.width, canvas.height);
     }
-    if (heroReady){
-        canvasContext.drawImage(heroImage,player.x,player.y, 100, 80);
+
+    console.log(player.heroReady);
+    if (player.heroReady){
+        player.draw();
     }
-    if (enemyReady){
-        canvasContext.drawImage(enemyImage,enemy.x, enemy.y, 72 , 40);
+
+    if (fish1.enemyReady){
+        fish1.draw();
     }
 
     //score display
