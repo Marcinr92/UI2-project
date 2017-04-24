@@ -25,13 +25,16 @@ bgImage.src = "img/backgroundScore.png";
 
 var player = new Player(250,0,0, "img/GreenFish.png", "img/GreenfishLeft.png");
 var fish1 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png");
+var fish2 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png");
+addToEnemyList(fish1);
+addToEnemyList(fish2);
+
+
 
 
 var score = 0;
 
-
 //gameloop. each function that draws or manipulates the game is called here. it is updated as often as possible.
-
 var main = function(){
     var now = Date.now();
     var delta = now - then;
@@ -48,5 +51,5 @@ var main = function(){
 
 //here the game starts
 var then = Date.now();
-reset();
+startingPositionEnemy();
 main();

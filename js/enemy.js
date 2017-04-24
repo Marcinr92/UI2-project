@@ -15,7 +15,7 @@ function Enemy(speed, x, y, img, imgRight) {
     this.enemyReady = false;
     this.enemyImage = new Image();
     this.enemyImageRight = new Image();
-    _this = this; //saves the "this" and takes it to the other function (otherwise it would refer to different "this"
+    var _this = this; //saves the "this" and takes it to the other function (otherwise it would refer to different "this"
     this.enemyImage.onload = function(){
         _this.enemyReady = true;
     };
@@ -74,4 +74,25 @@ function Enemy(speed, x, y, img, imgRight) {
         }
     }
 }
+
+//Controlls the amount of enemies and creates new ones and remove old once during play
+var enemyList =[];
+
+
+//adds enemies
+function addToEnemyList(newEnemy){
+    enemyList.push(newEnemy);
+}
+
+//removes enemies
+function removeFromEnemyList(index, enemy){
+    enemyList.splice(index, enemy);
+}
+
+//returns list of enemies
+function getEnemyList(){
+    return enemyList;
+}
+
+
 

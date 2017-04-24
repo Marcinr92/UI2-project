@@ -20,7 +20,6 @@ function Player(speed, x, y, img, imgRight) {
     this.heroImageRight = new Image();
     var _this = this;
     this.heroImage.onload = function(){
-        console.log("inne");
         _this.heroReady = true;
     };
 
@@ -28,7 +27,6 @@ function Player(speed, x, y, img, imgRight) {
     this.heroImageRight.src = imgRight;
 
     this.draw = function() {
-        console.log("fisk");
         if (this.xDir == -1){
             canvasContext.drawImage(this.heroImage, this.x, this.y, 100, 80);
         } else {
