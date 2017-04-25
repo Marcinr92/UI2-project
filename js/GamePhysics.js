@@ -13,12 +13,41 @@ addEventListener("keydown", function(e){
 addEventListener("keyup", function(e){
     delete keysDown[e.keyCode];
 }, false);
-
 //randomises position of new enemy when previous is caught
-var reset = function(enemy){
-    enemy.x = 32 + (Math.random() * (canvas.width - 64));
-    enemy.y = 32 + (Math.random() * (canvas.height - 64));
+var reset = function(i){
+
+    removeFromEnemyList(i);
+
+    var xPos = randomPosition();
+    var yPos = randomPosition();
+    var speed = randomNumber(200, 100);
+    var imageList = randomFishImage();
+
+    var newEnemy = new Enemy(speed, xPos, yPos, imageList[0], imageList[1], 0);
+
+    addToEnemyList(newEnemy);
+
 };
+
+function randomPosition(){
+    var position = 32*2 + (Math.random() * (canvas.width - 64*2));
+    return position;
+}
+
+function randomNumber(max, min){
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+function randomFishImage(){
+    var listOfFish = ["img/fish3.png", "img/fish4.png", "img/fish5.png" ];
+    var listOfFishRight = ["img/fish3right.png", "img/fish4right.png", "img/fish5right.png" ];
+
+    var index = randomNumber(2, 0);
+
+    var listOfImages = [listOfFish[index], listOfFishRight[index]];
+
+    return listOfImages;
+}
 
 //Gives the enemies a starting position
 var startingPositionEnemy = function (){
@@ -32,13 +61,19 @@ var startingPositionEnemy = function (){
 var update = function (modifier) {
     player.movePlayer(modifier);
 
-    for(var i=0; i < enemyList.length; i++) {
+    for(var i=enemyList.length-1; i >= 0; i--) {
         enemyList[i].updateEnemy(modifier);
-        
+
         //detects if the player and the enemy have collided
         if (player.x <= (enemyList[i].x + 32) && enemyList[i].x <= (player.x + 32) && player.y <= (enemyList[i].y + 32) && enemyList[i].y <= (player.y + 32)) {
-            ++score;
-            reset(enemyList[i]);
+            console.log(enemyList[i].type);
+            if (enemyList[i].type == 0){
+                ++score;
+                reset(i);
+            } else {
+                --score;
+            }
+
         }
     }
 };

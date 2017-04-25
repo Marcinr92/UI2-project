@@ -5,12 +5,13 @@
 // constructor function
 
 // var enemy = new Enemy(100, 0, 0, img)
-function Enemy(speed, x, y, img, imgRight) {
+function Enemy(speed, x, y, img, imgRight, type) {
     this.speed = speed;
     this.x = x;
     this.y = y;
     this.xDir = -1; //moves to the right if it is 1 and left if it is -1
     this.yDir = 1; //Moves down if it is 1 and up if it is -1
+    this.type = type; //0 equals a fish that can be eaten, 1 equals a fish that can eat the player
 
     this.enemyReady = false;
     this.enemyImage = new Image();
@@ -24,13 +25,21 @@ function Enemy(speed, x, y, img, imgRight) {
     this.enemyImageRight.src = imgRight;
 
     this.draw = function() {
-        if (this.xDir == -1){
-            canvasContext.drawImage(this.enemyImage, this.x, this.y, 72 , 40);
+        if (this.type == 0) {
+            if (this.xDir == -1) {
+                canvasContext.drawImage(this.enemyImage, this.x, this.y, 72, 40);
+            } else {
+                canvasContext.drawImage(this.enemyImageRight, this.x, this.y, 72, 40);
+            }
         } else {
-            canvasContext.drawImage(this.enemyImageRight, this.x, this.y, 72 , 40);
+            if (this.xDir == -1) {
+                canvasContext.drawImage(this.enemyImage, this.x, this.y, 300, 111);
+            } else {
+                canvasContext.drawImage(this.enemyImageRight, this.x, this.y, 300, 111);
+            }
         }
-    };
 
+    };
 
     this.updateEnemy = function(modifier) {
         // These look at each frame to see if the enemy has reached any of the sides of the canvas. and if they did
@@ -78,21 +87,16 @@ function Enemy(speed, x, y, img, imgRight) {
 //Controlls the amount of enemies and creates new ones and remove old once during play
 var enemyList =[];
 
-
 //adds enemies
 function addToEnemyList(newEnemy){
     enemyList.push(newEnemy);
 }
 
 //removes enemies
-function removeFromEnemyList(index, enemy){
-    enemyList.splice(index, enemy);
+function removeFromEnemyList(index){
+    enemyList.splice(index, 1);
 }
 
-//returns list of enemies
-function getEnemyList(){
-    return enemyList;
-}
 
 
 

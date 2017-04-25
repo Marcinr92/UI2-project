@@ -24,13 +24,12 @@ bgImage.onload= function() {
 bgImage.src = "img/backgroundScore.png";
 
 var player = new Player(250,0,0, "img/GreenFish.png", "img/GreenfishLeft.png");
-var fish1 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png");
-var fish2 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png");
+var fish1 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png", 0);
+var fish2 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png", 0);
+var fish3 = new Enemy(300,0,0, "img/fish2.png", "img/fish2right.png", 1);
 addToEnemyList(fish1);
 addToEnemyList(fish2);
-
-
-
+addToEnemyList(fish3);
 
 var score = 0;
 
