@@ -1,15 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>UI2-Project</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-    <body>
-        <script src="js/GamePhysics.js"></script>
-        <script src="js/enemy.js"></script>
-        <script src="js/hero.js"></script>
-    	<script src="js/main.js"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>UI2-Project</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/joystick.css">
+    <style>
+      #controller{
+        width:150px;
+        height:150px;
+        font-size:150px;
+      }
+    </style>
+</head>
+
+<body>
+    <script src="js/GamePhysics.js"></script>
+    <script src="js/enemy.js"></script>
+    <script src="js/hero.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/JoydivModule.js"></script>
+
+    <div id='controller' class="joydiv-controller">
+        <div class="joydiv-up"></div>
+        <div class="joydiv-left"></div>
+        <div class="joydiv-right"></div>
+        <div class="joydiv-down"></div>
+        <div class="joydiv-trackpad">
+            <div class="joydiv-tracker"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(function(){
+        var element = document.getElementById('controller');
+        var joydiv = new JoydivModule.Joydiv({'element':element});
+        element.addEventListener('joydiv-changed',function(e){
+            delete keysDown[37];
+            delete keysDown[38];
+            delete keysDown[39];
+            delete keysDown[40];
+
+            var direction = joydiv.getOneOf8Directions().name;
+            console.log(direction);
+            if(direction.indexOf("left") > -1)
+                keysDown[37] = true;
+            if(direction.indexOf("up") > -1)
+                keysDown[38] = true;
+            if(direction.indexOf("right") > -1)
+                keysDown[39] = true;
+            if(direction.indexOf("down") > -1)
+                keysDown[40] = true;
+            
+            if(direction.indexOf("none") > -1){
+                delete keysDown[37];
+                delete keysDown[38];
+                delete keysDown[39];
+                delete keysDown[40];
+            }
+                
+        });
+    });
+    </script>
+</body>
+
 </html>
