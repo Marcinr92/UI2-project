@@ -27,25 +27,26 @@ bgImage.src = "img/backgroundScore.png";
 var startImage = new Image();
 startImage.src = "img/start.png";
 
-//draw start screen
-canvasContext.drawImage(startImage,0 ,0, canvas.width, canvas.height);
-
-//read in the play button
 var playButton = new Image();
 playButton.src = "img/play.png";
+startImage.onload = function() {
+    //draw start screen
+    canvasContext.drawImage(startImage,0 ,0, canvas.width, canvas.height);
+    //read in the play button
 
-//draw start screen
-canvasContext.drawImage(playButton,480 ,490, 300, 96);
+    //draw start screen
+    canvasContext.drawImage(playButton,480 ,490, 300, 96);
+};
 
 //resize to make sure the background fits the screen
 resize();
 
 var player = null;
 
-//
+//eventlistener to check if user wants to start the game
 canvas.addEventListener("mousedown", click, false);
 
-
+//fucntion that starts the game if user have clicked
 function click(e){
     e.preventDefault();
 
@@ -57,7 +58,6 @@ function click(e){
 //Check if mouseclick is within the playbutton area on the canvas, if so start the game
     if(mouseX>565 && mouseX<925 && mouseY>375 && mouseY<450){
         canvasContext.drawImage(bgImage,0 ,0, canvas.width, canvas.height);
-
         startGame();
     }
 }
@@ -66,6 +66,8 @@ var then = null;
 var score = null;
 //when the user presses the play button the hero and enemies are loaded and the game can begin
 function startGame() {
+
+    //create initial gameplay characters
     player = new Player(250,0,0, "img/GreenFish.png", "img/GreenfishLeft.png");
     var fish1 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png", 0);
     var fish2 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png", 0);

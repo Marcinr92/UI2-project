@@ -100,4 +100,4 @@ var render = function(){
     canvasContext.textAlign = "center";
     canvasContext.textBaseline = "top";
     canvasContext.fillText("Score: "+score, canvas.width/2 ,60);
-}
+};
