@@ -14,6 +14,8 @@ function Player(speed, x, y, img, imgRight) {
     this.x = x;
     this.y = y;
     this.xDir = 1;
+    this.width = 100;
+    this.height = 80;
 
     this.heroReady = false;
     this.heroImage = new Image();
@@ -28,9 +30,9 @@ function Player(speed, x, y, img, imgRight) {
 
     this.draw = function() {
         if (this.xDir == -1){
-            canvasContext.drawImage(this.heroImage, this.x, this.y, 100, 80);
+            canvasContext.drawImage(this.heroImage, this.x, this.y, this.width, this.height);
         } else {
-            canvasContext.drawImage(this.heroImageRight, this.x, this.y, 100, 80);
+            canvasContext.drawImage(this.heroImageRight, this.x, this.y, this.width, this.height);
         }
     };
 
