@@ -9,6 +9,8 @@ function Enemy(speed, x, y, img, imgRight, type) {
     this.speed = speed;
     this.x = x;
     this.y = y;
+    this.width = 0;
+    this.height = 0;
     this.xDir = -1; //moves to the right if it is 1 and left if it is -1
     this.yDir = 1; //Moves down if it is 1 and up if it is -1
     this.type = type; //0 equals a fish that can be eaten, 1 equals a fish that can eat the player
@@ -26,16 +28,20 @@ function Enemy(speed, x, y, img, imgRight, type) {
 
     this.draw = function() {
         if (this.type == 0) {
+            this.width = 72;
+            this.height = 40;
             if (this.xDir == -1) {
-                canvasContext.drawImage(this.enemyImage, this.x, this.y, 72, 40);
+                canvasContext.drawImage(this.enemyImage, this.x, this.y, this.width, this.height);
             } else {
-                canvasContext.drawImage(this.enemyImageRight, this.x, this.y, 72, 40);
+                canvasContext.drawImage(this.enemyImageRight, this.x, this.y, this.width, this.height);
             }
         } else {
+            this.width = 300;
+            this.height = 111;
             if (this.xDir == -1) {
-                canvasContext.drawImage(this.enemyImage, this.x, this.y, 300, 111);
+                canvasContext.drawImage(this.enemyImage, this.x, this.y, this.width, this.height);
             } else {
-                canvasContext.drawImage(this.enemyImageRight, this.x, this.y, 300, 111);
+                canvasContext.drawImage(this.enemyImageRight, this.x, this.y, this.width, this.height);
             }
         }
 

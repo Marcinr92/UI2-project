@@ -65,8 +65,7 @@ var update = function (modifier) {
         enemyList[i].updateEnemy(modifier);
 
         //detects if the player and the enemy have collided
-        if (player.x <= (enemyList[i].x + 32) && enemyList[i].x <= (player.x + 32) && player.y <= (enemyList[i].y + 32) && enemyList[i].y <= (player.y + 32)) {
-            console.log(enemyList[i].type);
+        if (player.x <= (enemyList[i].x + 32) && player.x >= (enemyList[i].x - 32) && player.y <= (enemyList[i].y + 32) && player.y >= (enemyList[i].y - 32)) {
             if (enemyList[i].type == 0){
                 ++score;
                 reset(i);
