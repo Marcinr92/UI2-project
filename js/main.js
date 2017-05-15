@@ -63,8 +63,10 @@ function click(e){
 }
 
 var then = null;
-var score = null;
+var score = 0;
+var hardMode = 0;
 //when the user presses the play button the hero and enemies are loaded and the game can begin
+
 function startGame() {
 
     //create initial gameplay characters
@@ -72,6 +74,7 @@ function startGame() {
     var fish1 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png", 0);
     var fish2 = new Enemy(100,0,0, "img/fish3.png", "img/fish3right.png", 0);
     var fish3 = new Enemy(300,0,0, "img/fish2.png", "img/fish2right.png", 1);
+
     addToEnemyList(fish1);
     addToEnemyList(fish2);
     addToEnemyList(fish3);
@@ -83,7 +86,38 @@ function startGame() {
     startingPositionEnemy();
     main();
 }
+function startHardMode() {
+    if (hardMode == 0){
+        var fish4 = new Enemy(1000,0,0, "img/fish2.png", "img/fish2right.png", 1);
+        addToEnemyList(fish4);
+        enemyList[enemyList.length-1].x = 32 + (Math.random() * (canvas.width - 64));
+        enemyList[enemyList.length-1].y = 32 + (Math.random() * (canvas.height - 64));
+        hardMode = 1;
+    }
+}
+function fishSpeed(){
+    for (var i = 0; i <= enemyList.length; i++){
 
+        if (score >= 2){
+            enemyList[i].speed = enemyList[i].speed = 300;
+            player.speed = 250;
+        }
+        if (score >= 4){
+            enemyList[i].speed = enemyList[i].speed = 400;
+            player.speed = 350;
+        }
+        if (score >= 8){
+            enemyList[i].speed = enemyList[i].speed = 600;
+            player.speed = 550;
+        }
+        if (score >= 16){
+            enemyList[i].speed = enemyList[i].speed = 1000;
+            player.speed = 900;
+            startHardMode();
+        }
+
+    }
+}
 
 
 //gameloop. each function that draws or manipulates the game is called here. it is updated as often as possible.
@@ -99,6 +133,8 @@ var main = function(){
     requestAnimationFrame(main);
 
     resize();
+    fishSpeed();
+
 };
 
 
