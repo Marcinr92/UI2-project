@@ -57,7 +57,7 @@ var startingPositionEnemy = function (){
     }
 };
 
-var gameOver = false;
+
 //game physics and collision detection
 var update = function (modifier) {
     player.movePlayer(modifier);
@@ -66,20 +66,14 @@ var update = function (modifier) {
         enemyList[i].updateEnemy(modifier);
 
         //detects if the player and the enemy have collided (box to box collision checking)
-
-
         if(!((player.y + player.height) < (enemyList[i].y) || (player.y > (enemyList[i].y + enemyList[i].height)) ||
             ((player.x + player.width) < enemyList[i].x) || (player.x > (enemyList[i].x + enemyList[i].width)))){
             if (enemyList[i].type == 0){
                 ++score;
                 reset(i);
             } else {
-                --score;
-                /*
                 gameOver();
-                gameOver = true;*/
             }
-
         }
     }
 };
@@ -109,27 +103,85 @@ var render = function(){
     canvasContext.fillText("Score: "+score, canvas.width/2 ,60);
 };
 
-
+var gameover = false;
 function gameOver(){
+    gameover = true;
 
-//read in the end screen and play again button
+    for(i=0; i < enemyList.length;i++ ){
+        enemyList = [];
+    }
+
+    //read in the end screen and play again button
     var endImage = new Image();
     endImage.src = "img/gameOver.png";
 
     var playAgainButton = new Image();
+
+    var playAgainReady = false;
+    var playAgainButton = new Image();
+    playAgainButton.onload= function() {
+        playAgainReady = true;
+    };
     playAgainButton.src = "img/playAgain.png";
+
     endImage.onload = function() {
 
         //draw start screen
         canvasContext.drawImage(endImage,0 ,0, canvas.width, canvas.height);
 
-        //draw play again button
-        canvasContext.drawImage(playAgainButton,480 ,490, 300, 96);
+        //check the score against the highscore
+        checkHighscore();
+
+        //Show score from this game
+        canvasContext.textAlign = "center";
+        canvasContext.textBaseline = "top";
+        if(score > highscore){
+            canvasContext.fillStyle = "rgb(77,255,0)";
+            canvasContext.font = "40px Hobo";
+            canvasContext.fillText(score + " - New record!", canvas.width/2 ,340);
+        } else {
+            canvasContext.fillStyle = "rgb(0,0,0)";
+            canvasContext.font = "56px Hobo";
+            canvasContext.fillText(score, canvas.width/2 ,335);
+        }
+
+        //Highscore
+        canvasContext.fillStyle = "rgb(0,0,0)";
+        canvasContext.font = "56px Hobo";
+        canvasContext.textAlign = "center";
+        canvasContext.textBaseline = "top";
+        canvasContext.fillText(highscore, canvas.width/2 ,465);
+
+        //gives the button extra time to load since it takes to much time sometimes
+        playAgainButton.onload = function(){
+            //draw play again button
+            canvasContext.drawImage(playAgainButton,495 ,580, 300, 96);
+        };
+
+        //eventlistener to check if user wants to start the game
+        clickEvent = true;
+        addClickEvent();
     };
 
     //resize to make sure the background fits the screen
     resize();
 
-    var player = null;
+
 
 }
+
+function checkHighscore(){
+
+    //if highscore isn't null the program will see if the users score are higher than the highscore and in that case save the new highscore (in the local storage NOT in this particular game)
+    if(highscore !== null){
+        if (score > highscore) {
+            localStorage.setItem("highscore", score);
+        }
+    }
+
+    //if highscore is null the program will save the users score as the new highscore in the local storage NOT in this game though
+    else{
+        localStorage.setItem("highscore", score);
+    }
+}
+
