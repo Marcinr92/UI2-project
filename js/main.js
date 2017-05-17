@@ -75,6 +75,7 @@ function addClickEvent(){
                     //draw background
                     canvasContext.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
 
+                    //reset variables to be able to start on a new game
                     gameover = false;
                     then = null;
                     score = 0;
@@ -83,6 +84,7 @@ function addClickEvent(){
                     startGame();
                 }
             } else {
+                //if the user presses a certain area (play button) the game starts for the first time
                 if (mouseX > 480 && mouseX < 780 && mouseY > 490 && mouseY < 582) {
                     canvasContext.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
                     startGame();
@@ -92,6 +94,7 @@ function addClickEvent(){
     }
 }
 
+//make it possible to click a certain area on the canvas
 addClickEvent();
 
 var then = null;
@@ -130,10 +133,14 @@ function startGame() {
     main();
 }
 
-//adds extre fish to the game when the user reaches a certain level
+//adds extra fish to the game when the user reaches a certain level
 function startHardMode() {
     if (hardMode == 0){
+
+        //create another enemy
         var fish4 = new Enemy(1000,0,0, "img/fish2.png", "img/fish2right.png", 1);
+
+        //add new fish to the enemylist
         addToEnemyList(fish4);
         enemyList[enemyList.length-1].x = 32 + (Math.random() * (canvas.width - 64));
         enemyList[enemyList.length-1].y = 32 + (Math.random() * (canvas.height - 64));
@@ -160,6 +167,7 @@ function fishSpeed(){
         if (score >= 16){
             enemyList[i].speed = enemyList[i].speed = 1000;
             player.speed = 900;
+            //adding another enemy
             startHardMode();
         }
     }
