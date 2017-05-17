@@ -57,7 +57,7 @@ var startingPositionEnemy = function (){
     }
 };
 
-var gameOver = false;
+
 //game physics and collision detection
 var update = function (modifier) {
     player.movePlayer(modifier);
@@ -66,20 +66,15 @@ var update = function (modifier) {
         enemyList[i].updateEnemy(modifier);
 
         //detects if the player and the enemy have collided (box to box collision checking)
-
-
         if(!((player.y + player.height) < (enemyList[i].y) || (player.y > (enemyList[i].y + enemyList[i].height)) ||
             ((player.x + player.width) < enemyList[i].x) || (player.x > (enemyList[i].x + enemyList[i].width)))){
             if (enemyList[i].type == 0){
                 ++score;
                 reset(i);
             } else {
-                --score;
-                /*
-                gameOver();
-                gameOver = true;*/
-            }
 
+                gameOver();
+            }
         }
     }
 };
@@ -109,10 +104,17 @@ var render = function(){
     canvasContext.fillText("Score: "+score, canvas.width/2 ,60);
 };
 
-
+var gameover = false;
 function gameOver(){
 
-//read in the end screen and play again button
+    gameover = true;
+    /*player.heroReady = false;*/
+
+    for(i=0; i < enemyList.length[i];i++ ){
+        removeFromEnemyList(i);
+    }
+
+    //read in the end screen and play again button
     var endImage = new Image();
     endImage.src = "img/gameOver.png";
 
@@ -124,12 +126,26 @@ function gameOver(){
         canvasContext.drawImage(endImage,0 ,0, canvas.width, canvas.height);
 
         //draw play again button
-        canvasContext.drawImage(playAgainButton,480 ,490, 300, 96);
+        canvasContext.drawImage(playAgainButton,495 ,580, 300, 96);
+
+        //Score from this game
+        canvasContext.fillStyle = "rgb(0,0,0)";
+        canvasContext.font = "56px Hobo";
+        canvasContext.textAlign = "center";
+        canvasContext.textBaseline = "top";
+        canvasContext.fillText(score, canvas.width/2 ,335);
+
+        //Highscore
+        canvasContext.fillStyle = "rgb(0,0,0)";
+        canvasContext.font = "56px Hobo";
+        canvasContext.textAlign = "center";
+        canvasContext.textBaseline = "top";
+        canvasContext.fillText("45", canvas.width/2 ,465);
     };
 
     //resize to make sure the background fits the screen
     resize();
 
-    var player = null;
-
+    //eventlistener to check if user wants to start the game
+    canvas.addEventListener("click", click, false);
 }
