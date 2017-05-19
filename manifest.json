@@ -1,0 +1,6 @@
+{
+    "name":"Aqua Frenzy",
+    "description":"This is a web based game, develeoped for User Interface Programming 2 Course",
+    "display":"standalone",
+    "orientation":"landscape"
+}

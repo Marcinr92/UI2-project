@@ -1,3 +1,9 @@
+#controller{
+  width:150px;
+  height:150px;
+  font-size:150px;
+}
+
 .joydiv-controller{
   position:fixed;
   bottom:5%;

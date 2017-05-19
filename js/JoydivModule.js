@@ -1,3 +1,8 @@
+/**
+ * === Joydiv ===
+ * This module will create a virtual controller for
+ * touch screen
+ */
 var JoydivModule;
 (function (JoydivModule) {
     var Direction = (function () {
