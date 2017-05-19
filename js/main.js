@@ -5,6 +5,7 @@ var canvasContext = canvas.getContext("2d");
 canvas.width = 640*2;
 canvas.height = 480*2;
 document.body.appendChild(canvas);
+var gameover = false;
 
 //variable containing the players fish
 var player = null;
@@ -189,10 +190,52 @@ function main() {
     }
 
     resize();
+    fishSpeed();
     requestAnimationFrame(main);
 }
 //initial language
 setEnglish();
 sweImage.globalAlpha = 0.5
+
+// run when html document ready
+$( document ).ready(function() {
+    // josctick initialization goes here
+    var element = document.getElementById('controller');
+
+    var joydiv = new JoydivModule.Joydiv({'element':element});
+    element.addEventListener('joydiv-changed',function(e){
+        delete keysDown[37];
+        delete keysDown[38];
+        delete keysDown[39];
+        delete keysDown[40];
+
+        var direction = joydiv.getOneOf8Directions().name;
+        console.log(direction);
+        if(direction.indexOf("left") > -1)
+            keysDown[37] = true;
+        if(direction.indexOf("up") > -1)
+            keysDown[38] = true;
+        if(direction.indexOf("right") > -1)
+            keysDown[39] = true;
+        if(direction.indexOf("down") > -1)
+            keysDown[40] = true;
+        
+        if(direction.indexOf("none") > -1){
+            delete keysDown[37];
+            delete keysDown[38];
+            delete keysDown[39];
+            delete keysDown[40];
+        } 
+    });
+
+    if(!Modernizr.touchevents){
+        // console.log("no touch!!");
+        element.style.display = "none";
+    }
+    else{
+        // console.log("YES touch!!");
+        element.style.display = "true";
+    }
+});
 
 main();
