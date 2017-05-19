@@ -7,6 +7,12 @@ canvas.height = 480*2;
 document.body.appendChild(canvas);
 var gameover = false;
 
+//Game audio is created here
+var BGMusic = new Audio("audio/Song.mp3");
+BGMusic.volume = 0.5;
+var eatFish = new Audio("audio/PlayerScore.wav");
+var deathSound = new Audio("audio/BigFish.wav");
+BGMusic.play();
 //variable containing the players fish
 var player = null;
 

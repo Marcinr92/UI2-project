@@ -82,9 +82,11 @@ var update = function (modifier) {
             if (enemyList[i].type == 0){
                 //if the user eats a smaller fish they get extra points
                 ++score;
+                eatFish.play();
                 reset(i);
             } else {
                 //if the user is eaten by the big fish they die!
+                deathSound.play();
                 gameOver();
                 break;
             }
@@ -98,7 +100,7 @@ function gameOver(){
     CURRENT_STATE = STATE_GAMEOVER;
     clickEvent = true;
     enemyList = [];
-    checkHighscore():
+    checkHighscore();
 }
 
 function checkHighscore(){
