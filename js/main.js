@@ -12,6 +12,7 @@ var BGMusic = new Audio("audio/Song.mp3");
 BGMusic.volume = 0.5;
 var eatFish = new Audio("audio/PlayerScore.wav");
 var deathSound = new Audio("audio/BigFish.wav");
+BGMusic.loop = true;
 BGMusic.play();
 //variable containing the players fish
 var player = null;
