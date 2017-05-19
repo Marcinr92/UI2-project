@@ -82,108 +82,28 @@ var update = function (modifier) {
             if (enemyList[i].type == 0){
                 //if the user eats a smaller fish they get extra points
                 ++score;
+                eatFish.play();
                 reset(i);
             } else {
                 //if the user is eaten by the big fish they die!
+                deathSound.play();
                 gameOver();
+                break;
             }
         }
     }
 };
 
-//drawing the game
-var render = function(){
-    if (bgReady){
-        canvasContext.drawImage(bgImage,0 ,0, canvas.width, canvas.height);
-    }
-
-    if (player.heroReady){
-        player.draw();
-    }
-
-    for(var i=0; i < enemyList.length; i++) {
-        if (enemyList[i].enemyReady) {
-
-            enemyList[i].draw();
-        }
-    }
-
-    //score display
-    canvasContext.fillStyle = "rgb(0,0,0)";
-    canvasContext.font = "36px Hobo";
-    canvasContext.textAlign = "center";
-    canvasContext.textBaseline = "top";
-    canvasContext.fillText("Score: "+score, canvas.width/2 ,60);
-};
-
-var gameover = false;
 
 //changes the screen interface if the user dies
 function gameOver(){
-    gameover = true;
-
-    for(i=0; i < enemyList.length;i++ ){
-        enemyList = [];
-    }
-
-    //read in the end screen and play again button
-    var endImage = new Image();
-    endImage.src = "img/gameOver.png";
-
-    //play again button created and loaded
-    var playAgainReady = false;
-    var playAgainButton = new Image();
-    playAgainButton.onload= function() {
-        playAgainReady = true;
-    };
-    playAgainButton.src = "img/playAgain.png";
-
-    //makes sure the images are loaded when end screen is shown
-    endImage.onload = function() {
-
-        //draw start screen
-        canvasContext.drawImage(endImage,0 ,0, canvas.width, canvas.height);
-
-        //check the score against the highscore
-        checkHighscore();
-
-        //Show score from this game - gives different text and color if the user have a new highscore
-        canvasContext.textAlign = "center";
-        canvasContext.textBaseline = "top";
-        if(score > highscore){
-            canvasContext.fillStyle = "rgb(77,255,0)";
-            canvasContext.font = "40px Hobo";
-            canvasContext.fillText(score + " - New record!", canvas.width/2 ,340);
-        } else {
-            canvasContext.fillStyle = "rgb(0,0,0)";
-            canvasContext.font = "56px Hobo";
-            canvasContext.fillText(score, canvas.width/2 ,335);
-        }
-
-        //Highscore text
-        canvasContext.fillStyle = "rgb(0,0,0)";
-        canvasContext.font = "56px Hobo";
-        canvasContext.textAlign = "center";
-        canvasContext.textBaseline = "top";
-        canvasContext.fillText(highscore, canvas.width/2 ,465);
-
-        //gives the button extra time to load since it takes to much time sometimes
-        playAgainButton.onload = function(){
-            //draw play again button
-            canvasContext.drawImage(playAgainButton,495 ,580, 300, 96);
-        };
-
-        //eventlistener to check if user wants to start the game
-        clickEvent = true;
-        addClickEvent();
-    };
-
-    //resize to make sure the background fits the screen
-    resize();
+    CURRENT_STATE = STATE_GAMEOVER;
+    clickEvent = true;
+    enemyList = [];
+    checkHighscore();
 }
 
 function checkHighscore(){
-
     //if highscore isn't null the program will see if the users score are higher than the highscore and in that case save the new highscore (in the local storage NOT in this particular game)
     if(highscore !== null){
         if (score > highscore) {
