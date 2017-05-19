@@ -98,6 +98,9 @@ var highscore = localStorage.getItem("highscore");
 var hardMode = 0;
 
 function startGame() {
+    // hide html controls in the front page
+    setMainPageHtmlVisibility(false);
+
     //create initial gameplay characters
     //hero fish controlled by user
     player = new Player(250,0,0, "img/GreenFish.png", "img/GreenfishLeft.png");
@@ -247,3 +250,14 @@ $( document ).ready(function() {
 });
 
 main();
+
+
+// set visibility of html element in the main page
+function setMainPageHtmlVisibility(isVisible){
+    if(isVisible){
+        $('.startpage-ctrl').show(0);
+    }
+    else{
+        $('.startpage-ctrl').hide(0);
+    }
+}

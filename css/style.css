@@ -12,11 +12,17 @@ html, body {
     src: url('../fonts/HoboStd.otf');
 }
 
-/*#tutorial-btn{
-    position: fixed;
-    bottom: 10%;
-    left: 45%;
-}*/
+/** TUTORIAL BUTTON */
+
+#tutorial-btn-div{
+    position: absolute; 
+    left: 50%; 
+    bottom: 23%;
+}
+#tutorial-btn-div div{
+    position: relative; 
+    left: -50%;
+}
 
 .button-blue {
   background: #66bdf7;
