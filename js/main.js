@@ -133,22 +133,22 @@ function startHardMode() {
 
 //increases speed on fish depending on how many points the users have collected
 function fishSpeed(){
-    for (var i = 0; i <= enemyList.length; i++){
+    for (var i = 0; i < enemyList.length; i++){
 
         if (score >= 2){
-            enemyList[i].speed = enemyList[i].speed = 300;
+            enemyList[i].speed = 300;
             player.speed = 250;
         }
         if (score >= 4){
-            enemyList[i].speed = enemyList[i].speed = 400;
+            enemyList[i].speed = 400;
             player.speed = 350;
         }
         if (score >= 8){
-            enemyList[i].speed = enemyList[i].speed = 600;
+            enemyList[i].speed = 600;
             player.speed = 550;
         }
         if (score >= 16){
-            enemyList[i].speed = enemyList[i].speed = 1000;
+            enemyList[i].speed = 1000;
             player.speed = 900;
             //adding another enemy
             startHardMode();
@@ -195,11 +195,11 @@ function main() {
 }
 //initial language
 setEnglish();
-sweImage.globalAlpha = 0.5
+sweImage.globalAlpha = 0.5;
 
 // run when html document ready
 $( document ).ready(function() {
-    // josctick initialization goes here
+    // joysctick initialization goes here
     var element = document.getElementById('controller');
 
     var joydiv = new JoydivModule.Joydiv({'element':element});

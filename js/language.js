@@ -2,7 +2,6 @@
  * Created by Lina Andersson on 2017-05-19.
  */
 
-
 var textStrings = {
     play: "null",
     playAgain: "null",
@@ -14,16 +13,16 @@ var textStrings = {
 sweTextStrings = {
     play: "Starta",
     playAgain: "Spela igen",
-    score: "Poäng",
-    highScore: "Top poäng",
+    score: "Poäng: ",
+    highScore: "Top poäng: ",
     newRecord: " - Nytt rekord!"
 };
 
 engTextStrings = {
     play: "Play",
     playAgain: "Play again",
-    score: "Score",
-    highScore: "Highscore",
+    score: "Score: ",
+    highScore: "Highscore: ",
     newRecord: " - New record!"
 };
 

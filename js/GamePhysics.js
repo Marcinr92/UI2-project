@@ -98,6 +98,7 @@ function gameOver(){
     CURRENT_STATE = STATE_GAMEOVER;
     clickEvent = true;
     enemyList = [];
+    checkHighscore():
 }
 
 function checkHighscore(){
