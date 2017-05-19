@@ -6,41 +6,6 @@ canvas.width = 640*2;
 canvas.height = 480*2;
 document.body.appendChild(canvas);
 
-//function that will resize the game dynamically when window size is manipulated
-function resize(){
-    var width = window.innerWidth;
-    var height = window.innerHeight;
-    var ratio = canvas.width/canvas.height;
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
-}
-
-//graphics load. the function is necessary so that all graphics load before start
-var bgReady = false;
-var bgImage = new Image();
-bgImage.onload= function() {
-    bgReady = true;
-};
-bgImage.src = "img/backgroundScore.png";
-
-//read in the start screen
-var startImage = new Image();
-startImage.src = "img/start.png";
-
-var playButton = new Image();
-playButton.src = "img/play.png";
-startImage.onload = function() {
-    //draw start screen
-    canvasContext.drawImage(startImage,0 ,0, canvas.width, canvas.height);
-    //read in the play button
-
-    //draw start screen
-    canvasContext.drawImage(playButton,480 ,490, 300, 96);
-};
-
-//resize to make sure the background fits the screen
-resize();
-
 //variable containing the players fish
 var player = null;
 
@@ -48,54 +13,69 @@ var player = null;
 var clickEvent = true;
 
 //eventlistener to check if user wants to start the game
-function addClickEvent(){
+canvas.addEventListener("click", click, false);
 
-    canvas.addEventListener("click", click, false);
+var flagPosition = 1130;
 
-    //function that starts the game if user have clicked
-    function click(e){
-        e.preventDefault();
+//function that starts the game if user have clicked
+function click(e){
+    e.preventDefault();
 
-        //make it possible to able and disable the click area (that is only supposed to be active when starting the game and when replaying it)
-        if (clickEvent == true) {
-            clickEvent = false;
+    //make it possible to able and disable the click area (that is only supposed to be active when starting the game and when replaying it)
+    if (clickEvent == true) {
+        //get mouse position x and Y in scren pixels
+        var mouseX = e.clientX;
+        var mouseY = e.clientY;
 
-            //get mouse position x and Y in scren pixels
-            var mouseX = e.clientX;
-            var mouseY = e.clientY;
+        //recalculate from windowsize to the canvas pixel size to make sure the clickable area is the same as the button
+        mouseX = (mouseX / window.innerWidth) * 640 * 2;
+        mouseY = (mouseY / window.innerHeight) * 480 * 2;
 
-            //recalculate from windowsize to the canvas pixel size to make sure the clickable area is the same as the button
-            mouseX = (mouseX / window.innerWidth) * 640 * 2;
-            mouseY = (mouseY / window.innerHeight) * 480 * 2;
+        //Check if mouseclick is within the playbutton area on the canvas, if so start the game
+        if (CURRENT_STATE == STATE_GAMEOVER) {
+            if (mouseX > 495 && mouseX < 795 && mouseY > 580 && mouseY < 676) {
 
-            //Check if mouseclick is within the playbutton area on the canvas, if so start the game
-            if (gameover == true) {
-                if (mouseX > 495 && mouseX < 795 && mouseY > 580 && mouseY < 676) {
+                //draw background
+                canvasContext.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
 
-                    //draw background
-                    canvasContext.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
-
-                    //reset variables to be able to start on a new game
-                    gameover = false;
-                    then = null;
-                    score = 0;
-                    hardMode = 0;
-                    player = null;
-                    startGame();
-                }
-            } else {
-                //if the user presses a certain area (play button) the game starts for the first time
-                if (mouseX > 480 && mouseX < 780 && mouseY > 490 && mouseY < 582) {
-                    canvasContext.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
-                    startGame();
-                }
+                //reset variables to be able to start on a new game
+                then = null;
+                score = 0;
+                hardMode = 0;
+                player = null;
+                startGame();
+            }
+        } else {
+            //if the user presses a certain area (play button) the game starts for the first time
+            if (mouseX > 480 && mouseX < 780 && mouseY > 500 && mouseY < 596) {
+                canvasContext.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+                startGame();
             }
         }
     }
-}
 
-//make it possible to click a certain area on the canvas
-addClickEvent();
+    //make it possible to able and disable the click area (that is only supposed to be active when starting the game and when replaying it)
+    if (clickEvent == true) {
+        //get mouse position x and Y in scren pixels
+        var mouseX = e.clientX;
+        var mouseY = e.clientY;
+
+        //recalculate from windowsize to the canvas pixel size to make sure the clickable area is the same as the button
+        mouseX = (mouseX / window.innerWidth) * 640 * 2;
+        mouseY = (mouseY / window.innerHeight) * 480 * 2;
+
+        //Check if mouseclick is within the playbutton area on the canvas, if so start the game
+        if (mouseX > 1200 && mouseX < 1250 && mouseY > 20 && mouseY < 50) {
+            setSwedish();
+            flagPosition = 1200;
+        } else if (mouseX > 1140 && mouseX < 1170 && mouseY > 20 && mouseY < 50) {
+            setEnglish()
+            flagPosition = 1130;
+
+
+        }
+    }
+}
 
 var then = null;
 
@@ -130,7 +110,9 @@ function startGame() {
 
     //set a starting position for all the enemies
     startingPositionEnemy();
-    main();
+
+    //main();
+    CURRENT_STATE = STATE_PLAY;
 }
 
 //adds extra fish to the game when the user reaches a certain level
@@ -173,26 +155,44 @@ function fishSpeed(){
     }
 }
 
+//variables for the programs three states
+var STATE_START = 1;
+var STATE_PLAY = 2;
+var STATE_GAMEOVER = 3;
+
+var CURRENT_STATE = STATE_START;
+
 //gameloop. each function that draws or manipulates the game is called here. it is updated as often as possible.
-function main(){
-    if (gameover == false){
+function main() {
+
+    if (CURRENT_STATE == STATE_START) {
+        clickEvent = true;
+        clickEventFlags = true;
+        renderStart();
+
+
+    } else if (CURRENT_STATE == STATE_PLAY) {
+        clickEvent = false;
+        clickEventFlags = false;
         var now = Date.now();
         var delta = now - then;
 
-        update(delta/1000);
-        render(canvasContext);
+        update(delta / 1000);
+        renderPlay(canvasContext);
 
         then = now;
 
-        requestAnimationFrame(main);
-
-        resize();
+    } else if (CURRENT_STATE == STATE_GAMEOVER) {
+        clickEvent = true;
+        clickEventFlags = false;
+        renderGameOver();
     }
 
     resize();
-    fishSpeed();
+    requestAnimationFrame(main);
+}
+//initial language
+setEnglish();
+sweImage.globalAlpha = 0.5
 
-};
-
-
-
+main();
