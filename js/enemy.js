@@ -4,7 +4,6 @@
 // the enemys coordenates and speed on the canvas in pixels.
 // constructor function
 
-// var enemy = new Enemy(100, 0, 0, img)
 function Enemy(speed, x, y, img, imgRight, type) {
     this.speed = speed;
     this.x = x;

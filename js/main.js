@@ -7,7 +7,8 @@ canvas.height = 480*2;
 document.body.appendChild(canvas);
 var gameover = false;
 
-//Game audio is created here
+//Game audio is created here. When one of these variables is called like xx.play(); it plays the file once.
+//eatFish and deathSound are called when the player gains a point or is eaten.
 var BGMusic = new Audio("audio/Song.mp3");
 BGMusic.volume = 0.5;
 var eatFish = new Audio("audio/PlayerScore.wav");
