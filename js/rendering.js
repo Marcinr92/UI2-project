@@ -99,6 +99,51 @@ var renderPlay = function(){
     canvasContext.fillText(textStrings.score +" " +score, canvas.width/2 ,60);
 };
 
+//drawing the tutorial
+var renderTutorial = function(tutorialMessage){
+    if (bgReady){
+        canvasContext.drawImage(bgImage,0 ,0, canvas.width, canvas.height);
+    }
+
+    if (player.heroReady){
+        player.draw();
+    }
+
+    for(var i=0; i < enemyList.length; i++) {
+        if (enemyList[i].enemyReady) {
+
+            enemyList[i].draw();
+        }
+    }
+
+    // render tutorial message
+    canvasContext.fillStyle = "rgb(0,0,0)";
+    canvasContext.font = "36px Hobo";
+    canvasContext.textAlign = "center";
+    canvasContext.textBaseline = "top";
+    canvasContext.fillText(tutorialMessage, canvas.width/2 ,200);
+    
+    //score display
+    canvasContext.fillStyle = "rgb(0,0,0)";
+    canvasContext.font = "36px Hobo";
+    canvasContext.textAlign = "center";
+    canvasContext.textBaseline = "top";
+    canvasContext.fillText(textStrings.score +" " +score, canvas.width/2 ,60);
+};
+
+
+var renderPause = function(){
+    console.log("PAAAAUUSE!");
+    canvasContext.drawImage(endImage,0 ,0, canvas.width, canvas.height);
+
+    // Game pause message
+    canvasContext.fillStyle = "rgb(52,179,239)";
+    canvasContext.font = "40px Hobo";
+    canvasContext.textAlign = "center";
+    canvasContext.textBaseline = "top";
+    canvasContext.fillText(textStrings.pause, canvas.width/2 ,280);
+}
+
 //drawing the end screen
 function renderGameOver() {
 

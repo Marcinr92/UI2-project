@@ -3,11 +3,20 @@
  */
 
 var keysDown = {};
+var paused = false;
 
 // eventisteners that are triggered as soon as any directional key is pressed
 
 addEventListener("keydown", function(e){
+    //console.log("key pressed : ", e.keyCode)
     keysDown[e.keyCode] = true;
+
+    // Pause the game on "esc" key
+    if(e.keyCode == 27){
+        paused = !paused;
+        CURRENT_STATE = paused ? 4: 2;
+    }
+    
 }, false);
 
 addEventListener("keyup", function(e){
@@ -70,6 +79,7 @@ var startingPositionEnemy = function (){
 
 //game physics and collision detection
 var update = function (modifier) {
+    
     player.movePlayer(modifier);
 
     //checks all the enemies in the list and their position in comparison to the hero
@@ -116,4 +126,3 @@ function checkHighscore(){
         localStorage.setItem("highscore", score);
     }
 }
-
