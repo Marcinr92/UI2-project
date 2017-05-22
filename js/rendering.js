@@ -52,7 +52,7 @@ function renderStart(){
     canvasContext.drawImage(startImage,0 ,0, canvas.width, canvas.height);
 
     //draw play button
-    canvasContext.drawImage(playButton,480 ,500, 300, 96);
+    // canvasContext.drawImage(playButton,480 ,500, 300, 96);
 
     // Green rectangle showing what is selected
     canvasContext.beginPath();
@@ -185,7 +185,7 @@ function renderGameOver() {
     canvasContext.font = "56px Hobo";
     canvasContext.textAlign = "center";
     canvasContext.textBaseline = "top";
-    canvasContext.fillText(highscore, canvas.width/2 ,465);
+    canvasContext.fillText(highscore || 0, canvas.width/2 ,465);
 
     //draw play again button
     canvasContext.drawImage(playButton,495 ,580, 300, 96);
