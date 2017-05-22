@@ -158,9 +158,7 @@ function addTutorialPreys(){
 
 function addTutorialEnemy(){
     if(!TUTORIAL_ENEMY){
-        var fish3 = new Enemy(300, 
-        32 + (Math.random() * (canvas.width - 64)),
-        32 + (Math.random() * (canvas.height - 64)), 
+        var fish3 = new Enemy(300, 32+canvas.width, 0, 
         "img/fish2.png", "img/fish2right.png", 1);
 
         addToEnemyList(fish3);
@@ -353,6 +351,14 @@ $( document ).ready(function() {
         // console.log("YES touch!!");
         element.style.display = "true";
     }
+
+    $("#start-btn").click((e) => {
+        e.preventDefault();
+        
+        clickEvent = true;
+        clickEventFlags = true;
+        startGame();
+    });
 
     $("#tutorial-btn").click((e) => {
         e.preventDefault();
