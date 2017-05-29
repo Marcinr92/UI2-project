@@ -1,14 +1,8 @@
 /**
  * Created by Laptopski on 2017-04-17.
  */
-// the players coordinates and speed in pixels.
-/*
-var player = {
-    speed: 256,
-    x:0,
-    y:0
-};*/
 
+//Here the player is created. The function takes in the coordinates and images used for the player.
 function Player(speed, x, y, img, imgRight) {
     this.speed = speed;
     this.x = x;
@@ -17,6 +11,7 @@ function Player(speed, x, y, img, imgRight) {
     this.width = 100;
     this.height = 80;
 
+    //makes sure that all assets load
     this.heroReady = false;
     this.heroImage = new Image();
     this.heroImageRight = new Image();
@@ -27,7 +22,7 @@ function Player(speed, x, y, img, imgRight) {
 
     this.heroImage.src = img;
     this.heroImageRight.src = imgRight;
-
+    //draws the hero
     this.draw = function() {
         if (this.xDir == -1){
             canvasContext.drawImage(this.heroImage, this.x, this.y, this.width, this.height);
@@ -36,6 +31,7 @@ function Player(speed, x, y, img, imgRight) {
         }
     };
 
+    //function that decides how the player is moved. In this case the arrow keys on the keyboard.
     this.movePlayer = function(modifier){
         //following if statements moves the player according to keypresses
         if (38 in keysDown){

@@ -7,6 +7,14 @@ canvas.height = 480*2;
 document.body.appendChild(canvas);
 var gameover = false;
 
+//Game audio is created here. When one of these variables is called like xx.play(); it plays the file once.
+//eatFish and deathSound are called when the player gains a point or is eaten.
+var BGMusic = new Audio("audio/Song.mp3");
+BGMusic.volume = 0.5;
+var eatFish = new Audio("audio/PlayerScore.wav");
+var deathSound = new Audio("audio/BigFish.wav");
+BGMusic.loop = true;
+BGMusic.play();
 //variable containing the players fish
 var player = null;
 
@@ -90,6 +98,9 @@ var highscore = localStorage.getItem("highscore");
 var hardMode = 0;
 
 function startGame() {
+    // hide html controls in the front page
+    setMainPageHtmlVisibility(false);
+
     //create initial gameplay characters
     //hero fish controlled by user
     player = new Player(250,0,0, "img/GreenFish.png", "img/GreenfishLeft.png");
@@ -114,6 +125,46 @@ function startGame() {
 
     //main();
     CURRENT_STATE = STATE_PLAY;
+}
+
+
+var TUTORIAL_STATE = 1;
+var TUTORIAL_PREY = false;
+var TUTORIAL_ENEMY = false;
+
+function startTutorial() {
+    setMainPageHtmlVisibility(false);
+    player = new Player(250,0,0, "img/GreenFish.png", "img/GreenfishLeft.png");
+}
+
+function addTutorialPreys(){
+    if(!TUTORIAL_PREY){
+        //enemies you can eat
+        var fish1 = new Enemy(100,
+            32 + (Math.random() * (canvas.width - 64)),
+            32 + (Math.random() * (canvas.height - 64)), 
+            "img/fish3.png", "img/fish3right.png", 0);
+        var fish2 = new Enemy(100,
+            32 + (Math.random() * (canvas.width - 64)),
+            32 + (Math.random() * (canvas.height - 64)), 
+            "img/fish3.png", "img/fish3right.png", 0);
+
+        addToEnemyList(fish1);
+        addToEnemyList(fish2);
+
+        TUTORIAL_PREY = true;
+    }    
+}
+
+function addTutorialEnemy(){
+    if(!TUTORIAL_ENEMY){
+        var fish3 = new Enemy(300, 32+canvas.width, 0, 
+        "img/fish2.png", "img/fish2right.png", 1);
+
+        addToEnemyList(fish3);
+
+        TUTORIAL_ENEMY = true;
+    }    
 }
 
 //adds extra fish to the game when the user reaches a certain level
@@ -160,6 +211,8 @@ function fishSpeed(){
 var STATE_START = 1;
 var STATE_PLAY = 2;
 var STATE_GAMEOVER = 3;
+var STATE_PAUSED = 4;
+var STATE_TUTORIAL = 5;
 
 var CURRENT_STATE = STATE_START;
 
@@ -177,7 +230,6 @@ function main() {
         clickEventFlags = false;
         var now = Date.now();
         var delta = now - then;
-
         update(delta / 1000);
         renderPlay(canvasContext);
 
@@ -187,6 +239,69 @@ function main() {
         clickEvent = true;
         clickEventFlags = false;
         renderGameOver();
+    }
+    
+    // else if (CURRENT_STATE == STATE_PAUSED){
+    //     clickEvent = true;
+    //     clickEventFlags = false;
+        
+    //     console.log("STATE: ", CURRENT_STATE);
+
+    //     then = Date.now();
+    //     renderPause();
+    // }
+
+    else if (CURRENT_STATE == STATE_TUTORIAL){
+        clickEvent = true;
+        clickEventFlags = false;
+
+        var tutorialMessage = "";
+
+        switch(TUTORIAL_STATE){
+            case 1:
+                if(!Modernizr.touchevents)
+                    tutorialMessage = textStrings.tutorial1a;
+                else
+                    tutorialMessage = textStrings.tutorial1b;
+                setTimeout(()=>{
+                    addTutorialPreys();
+                    TUTORIAL_STATE = 2
+                }, 3000);
+                break;
+            case 2:
+                tutorialMessage = textStrings.tutorial2;
+                setTimeout(()=>{
+                    addTutorialEnemy();
+                    TUTORIAL_STATE = 3;
+                }, 5000);
+                break;
+            case 3:
+                tutorialMessage = textStrings.tutorial3;
+                setTimeout(()=>{
+                    TUTORIAL_STATE = 4;
+                }, 5000);
+                break;
+            case 4:
+                tutorialMessage = textStrings.tutorial4;
+                setTimeout(()=>{
+                    TUTORIAL_STATE = 5;
+                }, 3000);
+                break;
+            case 5:
+                tutorialMessage = textStrings.tutorial5;
+                setTimeout(()=>{
+                    TUTORIAL_STATE = 0;
+                }, 3000);
+                break;
+        }
+        
+        var now = Date.now();
+        var delta = now - then;
+        update(delta / 1000);
+
+        renderTutorial(tutorialMessage, canvasContext);
+
+        then = now;
     }
 
     resize();
@@ -236,6 +351,33 @@ $( document ).ready(function() {
         // console.log("YES touch!!");
         element.style.display = "true";
     }
+
+    $("#start-btn").click((e) => {
+        e.preventDefault();
+        
+        clickEvent = true;
+        clickEventFlags = true;
+        startGame();
+    });
+
+    $("#tutorial-btn").click((e) => {
+        e.preventDefault();
+        
+        CURRENT_STATE = STATE_TUTORIAL;
+        TUTORIAL_STATE = 1;
+        startTutorial();
+    });
 });
 
 main();
+
+
+// set visibility of html element in the main page
+function setMainPageHtmlVisibility(isVisible){
+    if(isVisible){
+        $('.startpage-ctrl').show(0);
+    }
+    else{
+        $('.startpage-ctrl').hide(0);
+    }
+}
