@@ -2,7 +2,7 @@
  * Created by Lina Andersson on 2017-05-19.
  */
 
-//All the iamges are loaded here and also rendering of the different states
+//All the images are loaded here and also rendering of the different states
 
 
 //function that will resize the game dynamically when window size is manipulated
@@ -71,7 +71,6 @@ function renderStart(){
     canvasContext.textAlign = "center";
     canvasContext.textBaseline = "top";
     canvasContext.fillText(textStrings.play, canvas.width/2 ,520);
-
 }
 
 //drawing the game
