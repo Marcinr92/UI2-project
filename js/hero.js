@@ -22,6 +22,7 @@ function Player(speed, x, y, img, imgRight) {
 
     this.heroImage.src = img;
     this.heroImageRight.src = imgRight;
+    
     //draws the hero
     this.draw = function() {
         if (this.xDir == -1){

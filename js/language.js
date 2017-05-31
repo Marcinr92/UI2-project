@@ -1,7 +1,7 @@
 /**
  * Created by Lina Andersson on 2017-05-19.
  */
-
+//These text strings hold all language in the game, there is Swedish and English translations.
 var textStrings = {
     play: "null",
     playAgain: "null",
@@ -49,6 +49,8 @@ engTextStrings = {
     tutorial5:"Good Luck!"
 };
 
+//These functions are called when the translate buttons are pressed.
+
 function setSwedish() {
     textStrings = sweTextStrings;
     translateHtmlText();
@@ -61,4 +63,5 @@ function setEnglish() {
 
 function translateHtmlText(){
     $("#tutorial-btn").text(textStrings.tutorial);
+    $("#start-btn").text(textStrings.play);
 }

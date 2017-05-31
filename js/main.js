@@ -127,6 +127,8 @@ function startGame() {
     CURRENT_STATE = STATE_PLAY;
 }
 
+//The following functions are responsible for the tutorial. it will draw enemies and display text that helps the player to understand the game.
+//It acts as a normal playthrough so a player can score points and get a highscore for example.
 
 var TUTORIAL_STATE = 1;
 var TUTORIAL_PREY = false;
