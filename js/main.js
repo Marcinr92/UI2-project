@@ -80,8 +80,6 @@ function click(e){
         } else if (mouseX > 1140 && mouseX < 1170 && mouseY > 20 && mouseY < 50) {
             setEnglish()
             flagPosition = 1130;
-
-
         }
     }
 }
@@ -141,7 +139,7 @@ function startTutorial() {
 
 function addTutorialPreys(){
     if(!TUTORIAL_PREY){
-        //enemies you can eat
+        //create enemies you can eat
         var fish1 = new Enemy(100,
             32 + (Math.random() * (canvas.width - 64)),
             32 + (Math.random() * (canvas.height - 64)), 
@@ -151,6 +149,7 @@ function addTutorialPreys(){
             32 + (Math.random() * (canvas.height - 64)), 
             "img/fish3.png", "img/fish3right.png", 0);
 
+        ///Add new enemies to enemylist
         addToEnemyList(fish1);
         addToEnemyList(fish2);
 
@@ -213,7 +212,6 @@ function fishSpeed(){
 var STATE_START = 1;
 var STATE_PLAY = 2;
 var STATE_GAMEOVER = 3;
-var STATE_PAUSED = 4;
 var STATE_TUTORIAL = 5;
 
 var CURRENT_STATE = STATE_START;
@@ -221,13 +219,14 @@ var CURRENT_STATE = STATE_START;
 //gameloop. each function that draws or manipulates the game is called here. it is updated as often as possible.
 function main() {
 
+    //Start page rendering
     if (CURRENT_STATE == STATE_START) {
         clickEvent = true;
         clickEventFlags = true;
         renderStart();
 
 
-    } else if (CURRENT_STATE == STATE_PLAY) {
+    } else if (CURRENT_STATE == STATE_PLAY) { //play stat rendering
         clickEvent = false;
         clickEventFlags = false;
         var now = Date.now();
@@ -237,23 +236,14 @@ function main() {
 
         then = now;
 
-    } else if (CURRENT_STATE == STATE_GAMEOVER) {
+    } else if (CURRENT_STATE == STATE_GAMEOVER) { //game over state rendering
         clickEvent = true;
         clickEventFlags = false;
         renderGameOver();
     }
-    
-    // else if (CURRENT_STATE == STATE_PAUSED){
-    //     clickEvent = true;
-    //     clickEventFlags = false;
-        
-    //     console.log("STATE: ", CURRENT_STATE);
 
-    //     then = Date.now();
-    //     renderPause();
-    // }
 
-    else if (CURRENT_STATE == STATE_TUTORIAL){
+    else if (CURRENT_STATE == STATE_TUTORIAL){ //tutorial state rendering
         clickEvent = true;
         clickEventFlags = false;
 

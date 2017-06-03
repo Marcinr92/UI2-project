@@ -5,7 +5,7 @@
 var keysDown = {};
 var paused = false;
 
-// eventisteners that are triggered as soon as any directional key is pressed
+// eventlisteners that are triggered as soon as any directional key is pressed
 
 addEventListener("keydown", function(e){
     //console.log("key pressed : ", e.keyCode)

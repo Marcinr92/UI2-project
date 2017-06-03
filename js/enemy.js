@@ -6,14 +6,19 @@
 
 function Enemy(speed, x, y, img, imgRight, type) {
     this.speed = speed;
+
+    //x and y positions
     this.x = x;
     this.y = y;
+
+    //size of the fish
     this.width = 0;
     this.height = 0;
     this.xDir = -1; //moves to the right if it is 1 and left if it is -1
     this.yDir = 1; //Moves down if it is 1 and up if it is -1
     this.type = type; //0 equals a fish that can be eaten, 1 equals a fish that can eat the player
 
+    //image loading
     this.enemyReady = false;
     this.enemyImage = new Image();
     this.enemyImageRight = new Image();
@@ -25,8 +30,9 @@ function Enemy(speed, x, y, img, imgRight, type) {
     this.enemyImage.src = img;
     this.enemyImageRight.src = imgRight;
 
+    //function to be able to draw the image of the fish
     this.draw = function() {
-        if (this.type == 0) {
+        if (this.type == 0) { //If the the fish can be eaten a smaller fish is created
             this.width = 72;
             this.height = 40;
             if (this.xDir == -1) {
@@ -34,7 +40,7 @@ function Enemy(speed, x, y, img, imgRight, type) {
             } else {
                 canvasContext.drawImage(this.enemyImageRight, this.x, this.y, this.width, this.height);
             }
-        } else {
+        } else { //if the fish cant be eaten a bigger fish is created
             this.width = 300;
             this.height = 111;
             if (this.xDir == -1) {
@@ -43,7 +49,6 @@ function Enemy(speed, x, y, img, imgRight, type) {
                 canvasContext.drawImage(this.enemyImageRight, this.x, this.y, this.width, this.height);
             }
         }
-
     };
 
     this.updateEnemy = function(modifier) {
@@ -67,7 +72,6 @@ function Enemy(speed, x, y, img, imgRight, type) {
         }
 
         //following code controls the enemy movement on the screen and colliding with walls with the help of two booleans
-
         if(this.leftCollision && this.topCollision){
             this.x += this.speed * modifier;
             this.y -= this.speed * modifier;
@@ -89,7 +93,7 @@ function Enemy(speed, x, y, img, imgRight, type) {
     }
 }
 
-//Controlls the amount of enemies and creates new ones and remove old once during play
+//Controls the amount of enemies and creates new ones and remove old once during play
 var enemyList =[];
 
 //adds enemies

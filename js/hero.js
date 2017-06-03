@@ -5,9 +5,15 @@
 //Here the player is created. The function takes in the coordinates and images used for the player.
 function Player(speed, x, y, img, imgRight) {
     this.speed = speed;
+
+    //fish position
     this.x = x;
     this.y = y;
+
+    //swim direction
     this.xDir = 1;
+
+    //fish size
     this.width = 100;
     this.height = 80;
 
