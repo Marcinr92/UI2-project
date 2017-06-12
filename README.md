@@ -9,6 +9,10 @@ eat smaller fish and earn the points while avoiding
 being eaten by the big fish.
 The difficulty is increasing along with the point increase.
 
+# How to install
+- clone everything
+- run index.html
+
 ## Functions and features
 - tutorial
 - delightful BG music
