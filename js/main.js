@@ -304,12 +304,14 @@ function main() {
 setEnglish();
 sweImage.globalAlpha = 0.5;
 
-// run when html document ready
+// routines run after html document ready
 $( document ).ready(function() {
-    // joysctick initialization goes here
+    
+    // Virtual joystick initialization
     var element = document.getElementById('controller');
-
     var joydiv = new JoydivModule.Joydiv({'element':element});
+    // register each direction in the joystick to the appropriate 
+    // arrow keys on keyboard
     element.addEventListener('joydiv-changed',function(e){
         delete keysDown[37];
         delete keysDown[38];
@@ -317,7 +319,6 @@ $( document ).ready(function() {
         delete keysDown[40];
 
         var direction = joydiv.getOneOf8Directions().name;
-        console.log(direction);
         if(direction.indexOf("left") > -1)
             keysDown[37] = true;
         if(direction.indexOf("up") > -1)
@@ -335,15 +336,15 @@ $( document ).ready(function() {
         } 
     });
 
+    // Detect touch-screen. Show joystick only on touch-enabled devices
     if(!Modernizr.touchevents){
-        // console.log("no touch!!");
         element.style.display = "none";
     }
     else{
-        // console.log("YES touch!!");
         element.style.display = "true";
     }
 
+    // click-event handler for start-button
     $("#start-btn").click((e) => {
         e.preventDefault();
         
@@ -352,6 +353,7 @@ $( document ).ready(function() {
         startGame();
     });
 
+    // click-event handler for tutorial-button
     $("#tutorial-btn").click((e) => {
         e.preventDefault();
         

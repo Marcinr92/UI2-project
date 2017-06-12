@@ -2,9 +2,11 @@
  * === Joydiv ===
  * This module will create a virtual controller for
  * touch screen
+ * Cloned from: https://github.com/qbolec/Joydiv
  */
 var JoydivModule;
 (function (JoydivModule) {
+    // Initialize directions supported by joystick
     var Direction = (function () {
         function Direction(offset) {
             this.offset = {
@@ -31,6 +33,8 @@ var JoydivModule;
         return Direction;
     })();
     JoydivModule.Direction = Direction;    
+    
+    // Initialize joystick elements and register functionalities
     var Joydiv = (function () {
         function Joydiv(options) {
             this.options = options;
